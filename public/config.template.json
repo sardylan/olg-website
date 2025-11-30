@@ -1,0 +1,5 @@
+{
+  "API_PREFIX": "${API_PREFIX}",
+  "IMAGES_PREFIX": "${IMAGES_PREFIX}"
+}
+

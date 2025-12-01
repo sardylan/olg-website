@@ -21,9 +21,9 @@ jobs:
           name: Installing dependencies
           command: npm run build
       - persist_to_workspace:
-          root: dist
+          root: .
           paths:
-            - *
+            - dist
   store-artifacts:
     executor: node-lts
     steps:

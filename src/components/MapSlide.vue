@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
 import {config} from '../services/config';
-import type {CodMap} from '../models/map';
+import type {CodMap} from '../models';
 import placeholderImg from '../assets/placeholder.svg';
 
 const props = defineProps<{

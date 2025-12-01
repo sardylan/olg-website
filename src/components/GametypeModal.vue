@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { watch } from 'vue';
-import { Gametype } from '../models/gametype';
-import type { CodMap } from '../models/map';
+import { Gametype } from '../models';
+import type { CodMap } from '../models';
 
 const props = defineProps<{
   isOpen: boolean;

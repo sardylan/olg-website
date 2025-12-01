@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import {onMounted, ref} from 'vue';
 import Slideshow from './components/Slideshow.vue';
 import GametypeModal from './components/GametypeModal.vue';
-import { api } from './services/api';
-import type { CodMap } from './models/map';
-import { Gametype } from './models/gametype';
+import {api} from './services/api';
+import type {CodMap} from './models';
+import {Gametype} from './models';
 
 const maps = ref<CodMap[]>([]);
 const loading = ref(true);
@@ -123,18 +123,18 @@ onMounted(() => {
         <button @click="fetchMaps">Retry</button>
       </div>
 
-      <Slideshow v-else :maps="maps" @mapClick="handleMapClick" />
+      <Slideshow v-else :maps="maps" @mapClick="handleMapClick"/>
     </main>
 
     <footer>
       <p>&copy; 2025 CoD4 Map Showcase. Design by Antigravity.</p>
     </footer>
 
-    <GametypeModal 
-      :isOpen="isModalOpen" 
-      :map="selectedMap"
-      @close="closeModal" 
-      @selectGametype="handleGametypeSelect" 
+    <GametypeModal
+        :isOpen="isModalOpen"
+        :map="selectedMap"
+        @close="closeModal"
+        @selectGametype="handleGametypeSelect"
     />
   </div>
 </template>

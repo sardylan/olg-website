@@ -1,0 +1,51 @@
+---
+version: 2.1
+
+executors:
+  node-lts:
+    docker:
+      - image: cimg/node:lts
+
+jobs:
+  build:
+    executor: node-lts
+    steps:
+      - checkout
+      - run:
+          name: Selecting Node version
+          command: nvm use
+      - run:
+          name: Installing dependencies
+          command: npm install
+      - run:
+          name: Installing dependencies
+          command: npm run build
+      - persist_to_workspace:
+          root: dist
+          paths:
+            - *
+  store-artifacts:
+    executor: node-lts
+    steps:
+      - attach_workspace:
+          at: /workspace
+      - store_artifacts:
+          path: /workspace
+
+workflows:
+  build:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
+      - store-artifacts:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/

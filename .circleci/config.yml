@@ -4,16 +4,13 @@ version: 2.1
 executors:
   node-lts:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:24
 
 jobs:
   build:
     executor: node-lts
     steps:
       - checkout
-      - run:
-          name: Selecting Node version
-          command: nvm use
       - run:
           name: Installing dependencies
           command: npm install

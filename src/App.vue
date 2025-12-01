@@ -132,6 +132,7 @@ onMounted(() => {
 
     <GametypeModal 
       :isOpen="isModalOpen" 
+      :map="selectedMap"
       @close="closeModal" 
       @selectGametype="handleGametypeSelect" 
     />

@@ -1,0 +1,8 @@
+<svg width="1280" height="680" viewBox="0 0 1280 680" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="680" fill="#1a1a1a"/>
+  <rect x="10" y="10" width="1260" height="660" fill="none" stroke="#333" stroke-width="2"/>
+  <path d="M0 0 L1280 680" stroke="#222" stroke-width="2"/>
+  <path d="M1280 0 L0 680" stroke="#222" stroke-width="2"/>
+  <text x="640" y="340" font-family="Arial, sans-serif" font-size="48" fill="#555" text-anchor="middle" dominant-baseline="middle" font-weight="bold" letter-spacing="4">NO IMAGE</text>
+  <text x="640" y="390" font-family="Arial, sans-serif" font-size="24" fill="#444" text-anchor="middle" dominant-baseline="middle">MAP PREVIEW NOT AVAILABLE</text>
+</svg>

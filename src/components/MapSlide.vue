@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
 import {config} from '../services/config';
-import type {CodMap} from '../models';
+import type {CodMap} from '../models/map';
+import placeholderImg from '../assets/placeholder.svg';
 
 const props = defineProps<{
   map: CodMap;
@@ -13,6 +14,15 @@ const isLoaded = ref(false);
 
 const getImageUrl = (mapTag: string) => {
   return `${config.IMAGES_PREFIX}/${mapTag}.jpg`;
+};
+
+const handleImageError = (e: Event) => {
+  const img = e.target as HTMLImageElement;
+  // Prevent infinite loop if placeholder also fails
+  if (img.src !== placeholderImg) {
+    img.src = placeholderImg;
+  }
+  isLoaded.value = true; // Consider it loaded so we show the image (placeholder)
 };
 
 onMounted(() => {
@@ -27,11 +37,18 @@ onMounted(() => {
 <template>
   <div class="map-slide" :class="{ 'is-active': isActive, 'is-inactive': !map.active }">
     <div class="image-container">
-      <img v-if="imageSrc" :src="imageSrc" :alt="map.name"/>
+      <img 
+        v-if="imageSrc" 
+        :src="imageSrc" 
+        :alt="map.name"
+        loading="eager"
+        @error="handleImageError"
+      />
       <div v-else class="placeholder"></div>
     </div>
     <div class="map-info">
       <h3>{{ map.name }}</h3>
+      <span class="map-tag">{{ map.tag.toLowerCase() }}</span>
     </div>
   </div>
 </template>
@@ -49,6 +66,9 @@ onMounted(() => {
   flex-direction: column;
   cursor: default;
   transition: transform 0.2s ease;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 
   &.is-inactive {
     opacity: 0.5;
@@ -58,6 +78,10 @@ onMounted(() => {
 
       h3 {
         color: #666;
+      }
+      
+      .map-tag {
+        color: #444;
       }
     }
   }
@@ -74,6 +98,10 @@ onMounted(() => {
 
         h3 {
           color: #00ff88;
+        }
+        
+        .map-tag {
+          color: rgba(0, 255, 136, 0.8);
         }
       }
     }
@@ -125,6 +153,9 @@ onMounted(() => {
     position: absolute;
     bottom: 0;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
 
     h3 {
       margin: 0;
@@ -133,6 +164,13 @@ onMounted(() => {
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 1px;
+    }
+
+    .map-tag {
+      color: #888;
+      font-size: 0.8rem;
+      font-family: monospace;
+      letter-spacing: 0.5px;
     }
   }
 }

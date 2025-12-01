@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { watch } from 'vue';
 import { Gametype } from '../models/gametype';
+import type { CodMap } from '../models/map';
 
 const props = defineProps<{
   isOpen: boolean;
+  map?: CodMap | null;
 }>();
 
 const emit = defineEmits<{
@@ -55,7 +57,11 @@ watch(() => props.isOpen, (isOpen) => {
         
         <div class="modal-header">
           <h2>Select Gametype</h2>
-          <p>Choose your preferred Call of Duty 4 game mode</p>
+          <div v-if="map" class="selected-map-info">
+            <h3>{{ map.name }}</h3>
+            <span class="map-tag">{{ map.tag.toLowerCase() }}</span>
+          </div>
+          <p v-else>Choose your preferred Call of Duty 4 game mode</p>
         </div>
 
         <div class="gametype-grid">
@@ -67,6 +73,7 @@ watch(() => props.isOpen, (isOpen) => {
           >
             <span class="gametype-icon">{{ gametype.icon }}</span>
             <span class="gametype-name">{{ gametype.name }}</span>
+            <span class="gametype-tag">{{ gametype.tag.toLowerCase() }}</span>
           </button>
         </div>
       </div>
@@ -171,6 +178,30 @@ watch(() => props.isOpen, (isOpen) => {
     letter-spacing: 2px;
   }
 
+  .selected-map-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+
+    h3 {
+      margin: 0;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .map-tag {
+      color: #888;
+      font-size: 1rem;
+      font-family: monospace;
+      letter-spacing: 0.5px;
+    }
+  }
+
   p {
     margin: 0;
     color: #888;
@@ -233,6 +264,10 @@ watch(() => props.isOpen, (isOpen) => {
     .gametype-icon {
       transform: scale(1.2);
     }
+    
+    .gametype-tag {
+      color: rgba(0, 255, 136, 0.8);
+    }
   }
 
   &:active {
@@ -257,6 +292,14 @@ watch(() => props.isOpen, (isOpen) => {
   z-index: 1;
 }
 
+.gametype-tag {
+  font-size: 0.75rem;
+  color: #888;
+  font-family: monospace;
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
 // Modal transition animations
 .modal-enter-active,
 .modal-leave-active {
